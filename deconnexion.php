@@ -1,5 +1,4 @@
 <?php
-   session_start();
-   session_destroy();
+   $db = null;
    header("location:login.php");
 ?>
