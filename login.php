@@ -1,28 +1,3 @@
-<?php
-   require_once('connexion.php');
-
-   session_start();
-   @$login=$_POST["login"];
-   @$pass=md5($_POST["pass"]);
-   @$valider=$_POST["valider"];
-   $erreur="";
-   if(isset($valider)){
-      include("connexion.php");
-      $sql = 'SELECT * FROM `utilisateurs` WHERE `login`=? AND `pass`=? LIMIT 1';
-      $query = $db->prepare($sql);
-      $query->execute();
-
-      $result=$sql->fetchAll();
-      if(count($result)>0){
-         $_SESSION["prenomNom"]=ucfirst(strtolower($result[0]["prenom"])).
-         " ".strtoupper($result[0]["nom"]);
-         $_SESSION["autoriser"]="oui";
-         header("location:index.php");
-      }
-      else
-         $erreur="Mauvais login ou mot de passe!";
-   }
-?>
 <!DOCTYPE html>
 <html>
    <head>
@@ -57,8 +32,7 @@
       </style>
    </head>
    <body onLoad="document.fo.login.focus()">
-      <h1>Authentification [ <a href="inscription.php">Créer un compte</a> ]</h1>
-      <div class="erreur"><?php echo $erreur ?></div>
+      <h1>Authentification [ <a href="inscription2.php">Créer un compte</a> ]</h1>
       <form name="fo" method="post" action="">
          <input type="text" name="login" placeholder="Login" /><br />
          <input type="password" name="pass" placeholder="Mot de passe" /><br />

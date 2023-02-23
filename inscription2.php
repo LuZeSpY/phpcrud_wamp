@@ -20,6 +20,8 @@ if(!empty($_POST)){
         $query->bindValue(":pseudo", $pseudo, PDO::PARAM_STR);
         $query->execute();
 
+        header("Location: index.php");
+
     }else{
         die("Le formulaire est incomplet !");
     }
