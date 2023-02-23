@@ -28,33 +28,36 @@ if(!empty($_POST)){
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inscription bis</title>
-</head>
-<body>
-    <form method="post">
-        <div>
-            <label for="nom">Nom</label>
-            <input type="text" name="nom" id="nom"></input>
-        </div>
-        <div>
-            <label for="prenom">Prénom</label>
-            <input type="text" name="prenom" id="prenom"></input>
-        </div>
-        <div>
-            <label for="pseudo">Pseudo</label>
-            <input type="text" name="pseudo" id="pseudo"></input>
-        </div>
-        <div>
-            <label for="pass">Mot de passe</label>
-            <input type="password" name="pass" id="pass"></input>
-        </div>
-        <button type="submit">Je m'inscris</button>
-    </form>
-</body>
-</html>
+<?php include("frontend/template/header.php"); ?>
+
+    <div class="container-fluid d-flex align-items-center flex-column mt-4">
+        <form method="post">
+            <div class="form-outline mb-4">
+                <label for="nom">Nom</label>
+                <input type="text" name="nom" id="nom" class="form-control" placeholder="Entrer votre nom "></input>
+            </div>
+            <div class="form-outline mb-4">
+                <label for="prenom">Prénom</label>
+                <input type="text" name="prenom" id="prenom" class="form-control" placeholder="Entrer votre prenom "></input>
+            </div>
+            <div class="form-outline mb-4">
+                <label for="pseudo">Pseudo</label>
+                <input type="text" name="pseudo" id="pseudo" class="form-control" placeholder="Entrer votre pseudo "></input>
+            </div>
+            <div class="form-outline mb-4">
+                <label for="pass">Mot de passe</label>
+                <input type="password" name="pass" id="pass" class="form-control" placeholder="Entrer votre mot de passe "></input>
+            </div>
+            <div class="row mb-4">
+                <div class="col d-flex justify-content-center mb-2">
+                    <!-- Checkbox -->
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="form1Example3" />
+                        <label class="form-check-label" for="form1Example3"> Se souvenir de moi </label>
+                    </div>
+                </div>
+            <button type="submit" class="btn btn-primary btn-block">Je m'inscris</button>
+        </form>
+    </div>
+
+<?php include("frontend/template/footer.php"); ?>

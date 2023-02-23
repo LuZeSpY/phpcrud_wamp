@@ -16,34 +16,29 @@ $query->execute();
 $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liste des produits</title>
-</head>
-<body>
 
-    <h1>Liste des produits</h1>
-    <table>
+<?php include("frontend/template/header.php"); ?>
+<?php include("frontend/template/navbar.php"); ?>
+
+<div class="container">    
+    <table class="table">
         <thead>
-            <th>ID</th>
-            <th>Nom</th>
-            <th>Prix</th>
-            <th>Stock</th>
-            <th>Actions</th>
+            <th scope="col">ID</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Prix</th>
+            <th scope="col">Stock</th>
+            <th scope="col">Actions</th>
         </thead>
         <tbody>
         <?php
             foreach($result as $row){
         ?>
                 <tr>
-                    <td><?= $row['id'] ?></td>
-                    <td><?= $row['nom'] ?></td>
-                    <td><?= $row['ecole'] ?></td>
-                    <td><?= $row['age'] ?></td>
-                    <td><a href="read.php?id=<?= $row['id'] ?>">Voir</a>  <a href="update.php?id=<?= $row['id'] ?>">Modifier</a>  <a href="delete.php?id=<?= $row['id'] ?>">Supprimer</a></td>
+                    <td scope="row"><?= $row['id'] ?></td>
+                    <td scope="row"><?= $row['nom'] ?></td>
+                    <td scope="row"><?= $row['ecole'] ?></td>
+                    <td scope="row"><?= $row['age'] ?></td>
+                    <td scope="row"><a href="read.php?id=<?= $row['id'] ?>"><i class="fa-solid fa-eye p-1"></i></a>  <a href="update.php?id=<?= $row['id'] ?>"><i class="fa-solid fa-pencil px-3 p-1"></i></a>  <a href="delete.php?id=<?= $row['id'] ?>"><i class="fa-solid fa-trash-can p-1"></i></a></td>
                 </tr>
         <?php
             }
@@ -51,5 +46,6 @@ $result = $query->fetchAll(PDO::FETCH_ASSOC);
         </tbody>
     </table>
     <a href="create.php">Ajouter</a>
-</body>
-</html>
+</div>
+
+<?php include("frontend/template/footer.php"); ?>
