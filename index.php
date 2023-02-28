@@ -1,7 +1,7 @@
 <?php
 
 // On inclut la connexion à la base
-require_once('connexion.php');
+require_once('db/connexion.php');
 
 // On écrit notre requête
 $sql = 'SELECT * FROM `students`';
@@ -38,14 +38,14 @@ $result = $query->fetchAll(PDO::FETCH_ASSOC);
                     <td scope="row"><?= $row['nom'] ?></td>
                     <td scope="row"><?= $row['ecole'] ?></td>
                     <td scope="row"><?= $row['age'] ?></td>
-                    <td scope="row"><a href="read.php?id=<?= $row['id'] ?>"><i class="fa-solid fa-eye p-1"></i></a>  <a href="update.php?id=<?= $row['id'] ?>"><i class="fa-solid fa-pencil px-3 p-1"></i></a>  <a href="delete.php?id=<?= $row['id'] ?>"><i class="fa-solid fa-trash-can p-1"></i></a></td>
+                    <td scope="row"><a href="db/crud/read.php?id=<?= $row['id'] ?>"><i class="fa-solid fa-eye p-1"></i></a>  <a href="db/crud/update.php?id=<?= $row['id'] ?>"><i class="fa-solid fa-pencil px-3 p-1"></i></a>  <a href="db/crud/delete.php?id=<?= $row['id'] ?>"><i class="fa-solid fa-trash-can p-1"></i></a></td>
                 </tr>
         <?php
             }
         ?>
         </tbody>
     </table>
-    <a href="create.php">Ajouter</a>
+    <a href="db/crud/create.php">Ajouter</a>
 </div>
 
 <?php include("frontend/template/footer.php"); ?>

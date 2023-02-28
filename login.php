@@ -16,14 +16,12 @@ if(!empty($_POST)){
 
       //TEST PASSWORD
 
-      // $password = "123456";
-      // $hash = password_hash($password, PASSWORD_BCRYPT);
-      // if(!password_verify($password, $hash)){
-      //    die('Ca déconne');
-      // };
-      // var_dump($password, $hash);
-
-      //
+    //   $password = "123456";
+    //   $hash = password_hash($password, PASSWORD_BCRYPT);
+    //   if(!password_verify($password, $hash)){
+    //      die('Ca déconne');
+    //   };
+    //   var_dump($password, $hash);
 
       if(!$user){
          die("L'utilisateur et/ou le mot de passe est incorrect !");
@@ -41,7 +39,7 @@ if(!empty($_POST)){
       ];
 
       // On redirige
-      header("Location: index2.php");
+      header("Location: index.php");
 
    }
 }

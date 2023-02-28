@@ -12,7 +12,7 @@ if(!empty($_POST)){
         $pseudo = strip_tags($_POST["pseudo"]);
         $pass = password_hash($_POST["pass"], PASSWORD_BCRYPT);
 
-        require_once "connexion.php";
+        require_once "db/connexion.php";
         $sql = "INSERT INTO `utilisateurs` (`nom`, `prenom`, `pseudo`, `pass`) VALUES (:nom, :prenom, :pseudo, '$pass')";
         $query = $db->prepare($sql);
         $query->bindValue(":nom", $nom, PDO::PARAM_STR);
@@ -29,6 +29,7 @@ if(!empty($_POST)){
 ?>
 
 <?php include("frontend/template/header.php"); ?>
+<?php include("frontend/template/navbar.php"); ?>
 
     <div class="container-fluid d-flex align-items-center flex-column mt-4">
         <form method="post">
@@ -48,14 +49,14 @@ if(!empty($_POST)){
                 <label for="pass">Mot de passe</label>
                 <input type="password" name="pass" id="pass" class="form-control" placeholder="Entrer votre mot de passe "></input>
             </div>
-            <div class="row mb-4">
+            <!-- <div class="row mb-4">
                 <div class="col d-flex justify-content-center mb-2">
-                    <!-- Checkbox -->
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="" id="form1Example3" />
                         <label class="form-check-label" for="form1Example3"> Se souvenir de moi </label>
                     </div>
                 </div>
+            </div> -->
             <button type="submit" class="btn btn-primary btn-block">Je m'inscris</button>
         </form>
     </div>
