@@ -4,7 +4,7 @@ if(!empty($_POST)){
     // var_dump($_POST);
    if(isset($_POST["pseudo"], $_POST["pass"])
    && !empty($_POST["pseudo"]) && !empty($_POST["pass"])) {
-      require_once "connexion.php";
+      require_once "db/connexion.php";
 
       $sql = "SELECT * FROM `utilisateurs` WHERE `pseudo` = :pseudo";
 
