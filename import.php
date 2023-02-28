@@ -35,12 +35,51 @@ if(isset($_FILES['file'])){
 <?php include("frontend/template/header.php"); ?>
 <?php include("frontend/template/navbar.php"); ?>
 
-<div class="container">    
-    <form method="POST" enctype="multipart/form-data">
-        <label for="file">Fichier</label>
-        <input type="file" name="file">
-        <button type="submit">Enregistrer</button>
-    </form>
+<div class="container">
+    <div class="row d-flex justify-content-between">
+        <div class="card mt-4" style="width: 18rem;">
+            <div class="dot">
+                <span>1</span>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Vos papiers</h5>
+                <p class="card-text">Munissez-vous de votre carte grise, de votre eprmis, ainsi que de votre attestation d'assurance.</p>
+                <i class="fa-solid fa-address-card fa-2xl"></i>
+            </div>
+        </div>
+        <div class="card mt-4" style="width: 18rem;">
+            <div class="dot">
+                <span>2</span>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+        <div class="card mt-4" style="width: 18rem;">
+            <div class="dot">
+                <span>3</span>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4">    
+    <div class="file">
+        <form method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="file">Fichier</label>
+                <input class="form-control-file" type="file" name="file">
+            </div>
+            <button type="submit">Enregistrer</button>
+        </form>
+    </div>
 </div>
 
 <?php include("frontend/template/footer.php"); ?>

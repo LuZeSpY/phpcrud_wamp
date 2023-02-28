@@ -45,24 +45,33 @@ if(!empty($_POST)){
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion</title>
-</head>
-<body>
+<?php include("frontend/template/header.php"); ?>
+
+<div class="container mt-4">
     <form method="post">
+        <div class="form-outline mb-4">
             <label for="pseudo">Pseudo</label>
-            <input type="text" name="pseudo" id="pseudo"></input>
+            <input class="form-control" type="text" name="pseudo" id="pseudo"></input>
         </div>
-        <div>
+        <div class="form-outline mb-4">
             <label for="pass">Mot de passe</label>
-            <input type="password" name="pass" id="pass"></input>
+            <input class="form-control" type="password" name="pass" id="pass"></input>
         </div>
+        <!-- <div class="row mb-4">
+            <div class="col d-flex justify-content-center">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="form1Example3"/>
+                    <label class="form-check-label" for="form1Example3"> Remember me </label>
+                </div>
+            </div>
+
+            <div class="col">
+            <a href="#!">Forgot password?</a>
+            </div>
+        </div> -->
+
         <button type="submit">Je me connecte</button>
     </form>
-</body>
-</html>
+</div>
+
+<?php include("frontend/template/footer.php"); ?>
