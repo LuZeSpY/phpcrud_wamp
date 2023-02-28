@@ -1,68 +1,64 @@
-<?php
-   session_start();
-   @$nom=$_POST["nom"];
-   @$prenom=$_POST["prenom"];
-   @$login=$_POST["login"];
-   @$pass=$_POST["pass"];
-   @$repass=$_POST["repass"];
-   @$valider=$_POST["valider"];
-   $erreur="";
-   if(isset($valider)){
-      if(empty($nom)) $erreur="Nom laissé vide!";
-      elseif(empty($prenom)) $erreur="Prénom laissé vide!";
-      elseif(empty($prenom)) $erreur="Prénom laissé vide!";
-      elseif(empty($login)) $erreur="Login laissé vide!";
-      elseif(empty($pass)) $erreur="Mot de passe laissé vide!";
-      elseif($pass!=$repass) $erreur="Mots de passe non identiques!";
-      else{
-         include("connexion.php");
-         $sel=$pdo->prepare("select id from utilisateurs where login=? limit 1");
-         $sel->execute(array($login));
-         $tab=$sel->fetchAll();
-         if(count($tab)>0)
-            $erreur="Login existe déjà!";
-         else{
-            $ins=$pdo->prepare("insert into utilisateurs(nom,prenom,login,pass) values(?,?,?,?)");
-            if($ins->execute(array($nom,$prenom,$login,md5($pass))))
-               header("location:login.php");
-         }   
-      }
-   }
+<?php 
+if(!empty($_POST)){
+    // Test si formulaire s'envoie bien
+    // var_dump($_POST);
+
+    if(isset($_POST["nom"], $_POST["prenom"], $_POST["pseudo"], $_POST["pass"]) 
+    && !empty($_POST["nom"]) && !empty($_POST["prenom"]) && !empty($_POST["pseudo"]) && !empty($_POST["pass"])){
+        // Formulaire complet
+        // On va récupérer les données en les protégeant
+        $nom = strip_tags($_POST["nom"]);
+        $prenom = strip_tags($_POST["prenom"]);
+        $pseudo = strip_tags($_POST["pseudo"]);
+        $pass = password_hash($_POST["pass"], PASSWORD_BCRYPT);
+
+        require_once "db/connexion.php";
+        $sql = "INSERT INTO `utilisateurs` (`nom`, `prenom`, `pseudo`, `pass`) VALUES (:nom, :prenom, :pseudo, '$pass')";
+        $query = $db->prepare($sql);
+        $query->bindValue(":nom", $nom, PDO::PARAM_STR);
+        $query->bindValue(":prenom", $prenom, PDO::PARAM_STR);
+        $query->bindValue(":pseudo", $pseudo, PDO::PARAM_STR);
+        $query->execute();
+
+        header("Location: index.php");
+
+    }else{
+        die("Le formulaire est incomplet !");
+    }
+}
 ?>
-<!DOCTYPE html>
-<html>
-   <head>
-      <meta charset="utf-8" />
-      <style>
-         *{
-            font-family:arial;
-         }
-         body{
-            margin:20px;
-         }
-         input{
-            border:solid 1px #2222AA;
-            margin-bottom:10px;
-            padding:16px;
-            outline:none;
-            border-radius:6px;
-         }
-         .erreur{
-            color:#CC0000;
-            margin-bottom:10px;
-         }
-      </style>
-   </head>
-   <body>
-      <h1>Inscription</h1>
-      <div class="erreur"><?php echo $erreur ?></div>
-      <form name="fo" method="post" action="">
-         <input type="text" name="nom" placeholder="Nom" value="<?php echo $nom?>" /><br />
-         <input type="text" name="prenom" placeholder="Prénom" value="<?php echo $prenom?>" /><br />
-         <input type="text" name="login" placeholder="Login" value="<?php echo $login?>" /><br />
-         <input type="password" name="pass" placeholder="Mot de passe" /><br />
-         <input type="password" name="repass" placeholder="Confirmer Mot de passe" /><br />
-         <input type="submit" name="valider" value="S'authentifier" />
-      </form>
-   </body>
-</html>
+
+<?php include("frontend/template/header.php"); ?>
+<?php include("frontend/template/navbar.php"); ?>
+
+    <div class="container-fluid d-flex align-items-center flex-column mt-4">
+        <form method="post">
+            <div class="form-outline mb-4">
+                <label for="nom">Nom</label>
+                <input type="text" name="nom" id="nom" class="form-control" placeholder="Entrer votre nom "></input>
+            </div>
+            <div class="form-outline mb-4">
+                <label for="prenom">Prénom</label>
+                <input type="text" name="prenom" id="prenom" class="form-control" placeholder="Entrer votre prenom "></input>
+            </div>
+            <div class="form-outline mb-4">
+                <label for="pseudo">Pseudo</label>
+                <input type="text" name="pseudo" id="pseudo" class="form-control" placeholder="Entrer votre pseudo "></input>
+            </div>
+            <div class="form-outline mb-4">
+                <label for="pass">Mot de passe</label>
+                <input type="password" name="pass" id="pass" class="form-control" placeholder="Entrer votre mot de passe "></input>
+            </div>
+            <!-- <div class="row mb-4">
+                <div class="col d-flex justify-content-center mb-2">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="form1Example3" />
+                        <label class="form-check-label" for="form1Example3"> Se souvenir de moi </label>
+                    </div>
+                </div>
+            </div> -->
+            <button type="submit" class="btn btn-primary btn-block">Je m'inscris</button>
+        </form>
+    </div>
+
+<?php include("frontend/template/footer.php"); ?>
