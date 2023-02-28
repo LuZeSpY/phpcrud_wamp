@@ -39,7 +39,7 @@ if(!empty($_POST)){
       ];
 
       // On redirige
-      header("Location: index.php");
+      header("Location: import.php");
 
    }
 }
