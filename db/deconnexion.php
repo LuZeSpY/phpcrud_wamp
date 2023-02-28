@@ -1,4 +1,4 @@
 <?php
    $db = null;
-   header("location:login.php");
+   header("location:../login.php");
 ?>
