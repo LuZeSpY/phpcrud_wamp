@@ -1,6 +1,8 @@
 <?php
 /* Inclure le fichier config */
-require_once('../connexion.php');
+// require_once('../connexion.php');
+
+var_dump($_POST["usability"]);
 
 if(!empty($_POST)){
     //$_POST n'est pas vide.
@@ -18,7 +20,22 @@ if(!empty($_POST)){
         $caracteristiques = htmlspecialchars($_POST["description"]);
         $usability = $_POST["usability"];
 
-        var_dump($usability);
+        //Connexion
+        require_once('../connexion.php');
+
+        $sql = "INSERT INTO `computer` (`title`, `date_acquisition`, `caracteristiques`, `utilisable`) VALUES (:title, :date_acquisition, :caracteristiques, :utilisable)";
+        $query = $db->prepare($sql);
+        $query->bindValue(":title", $title, PDO::PARAM_STR);
+        $query->bindValue(":date_acquisition", $date_achat, PDO::PARAM_STR);
+        $query->bindValue(":caracteristiques", $caracteristiques, PDO::PARAM_STR);
+        $query->bindValue(":utilisable", $usability, PDO::PARAM_STR);
+        
+        if(!$query->execute()) {
+            die("Une erreur est survenue");
+        }
+
+    }else{
+        die("Le formulaire est incomplet");
     }
 }
 
