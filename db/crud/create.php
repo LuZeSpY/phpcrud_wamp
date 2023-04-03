@@ -1,72 +1,28 @@
 <?php
 /* Inclure le fichier config */
-require_once "connexion.php";
- 
-/* Definir les variables */
-$nom = $ecole = $age = "";
-$name_err = $ecole_err = $age_err = "";
- 
+require_once('../connexion.php');
 
-if($_SERVER["REQUEST_METHOD"] == "POST"){
-    /* Validate name */
-    $input_name = trim($_POST["nom"]);
-    if(empty($input_name)){
-        $name_err = "Veillez entrez un nom.";
-    } elseif(!filter_var($input_name, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
-        $name_err = "Veillez entrez a valid name.";
-    } else{
-        $nom = $input_name;
+if(!empty($_POST)){
+    //$_POST n'est pas vide.
+    if(isset($_POST["title"], $_POST["purchase_date"], $_POST["description"], $_POST["usability"]) 
+    && !empty($_POST["title"]) 
+    && !empty($_POST["purchase_date"]) 
+    && !empty($_POST["description"])
+    && !empty($_POST["usability"])
+    ){
+        //FORM complet
+        //Protection failles XSS
+
+        $title = strip_tags($_POST["title"]);
+        $date_achat = $_POST["purchase_date"];
+        $caracteristiques = htmlspecialchars($_POST["description"]);
+        $usability = $_POST["usability"];
+
+        var_dump($usability);
     }
-    
-    /* Validate ecole */
-    $input_ecole = trim($_POST["ecole"]);
-    if(empty($input_ecole)){
-        $ecole_err = "Veillez entrez une ecole.";     
-    } else{
-        $ecole = $input_ecole;
-    }
-    
-    /* Validate age */
-    $input_age = trim($_POST["age"]);
-    if(empty($input_age)){
-        $age_err = "Veillez entrez l'age.";     
-    } elseif(!ctype_digit($input_age)){
-        $age_err = "Veillez entrez une valeur positive.";
-    } else{
-        $age = $input_age;
-    }
-    
-    /* verifiez les erreurs avant enregistrement */
-    if(empty($name_err) && empty($ecole_err) && empty($age_err)){
-        /* Prepare an insert statement */
-        $sql = "INSERT INTO students (nom, ecole, age) VALUES (?, ?, ?)";
-         
-        if($stmt = mysqli_prepare($pdo, $sql)){
-            /* Bind les variables à la requette preparée */
-            mysqli_stmt_bind_param($stmt, "ssd", $param_nom, $param_ecole, $param_age);
-            
-            /* Set parameters */
-            $param_nom = $nom;
-            $param_ecole = $ecole;
-            $param_age = $age;
-            
-            /* executer la requette */
-            if(mysqli_stmt_execute($stmt)){
-                /* opération effectuée, retour */
-                header("location: index.php");
-                exit();
-            } else{
-                echo "Oops! une erreur est survenue.";
-            }
-        }
-         
-        /* Close statement */
-        mysqli_stmt_close($stmt);
-    }
-    
-    /* Close connection */
-    mysqli_close($pdo);
 }
+
+
 ?>
 
 
@@ -88,29 +44,35 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <h2 class="mt-5">Créer un enregistrement</h2>
-                    <p>Remplir le formulaire pour enregistrer l'étudiant dans la base de données</p>
+                    <h2 class="mt-5">Rajouter un ordinateur</h2>
+                    <p>Remplir le formulaire pour enregistrer un nouvel ordinateur dans la base de données</p>
 
-
-                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                    <form method="post">
                         <div class="form-group">
-                            <label>Nom</label>
-                            <input type="text" name="nom" class="form-control <?php echo (!empty($name_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $nom; ?>">
-                            <span class="invalid-feedback"><?php echo $name_err;?></span>
+                            <label>Titre</label>
+                            <textarea name="title" class="form-control"></textarea>
                         </div>
                         <div class="form-group">
-                            <label>Ecole</label>
-                            <textarea name="ecole" class="form-control <?php echo (!empty($ecole_err)) ? 'is-invalid' : ''; ?>"><?php echo $ecole; ?></textarea>
-                            <span class="invalid-feedback"><?php echo $ecole_err;?></span>
+                            <label>Date d'acquisition</label>
+                            <input type="date" name="purchase_date" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label>Age</label>
-                            <input type="number" name="age" class="form-control <?php echo (!empty($age_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $age; ?>">
-                            <span class="invalid-feedback"><?php echo $age_err;?></span>
+                            <label>Caractéristiques</label>
+                            <input type="text" name="description" class="form-control">
                         </div>
-                        <input type="submit" class="btn btn-primary" value="Enregistrer">
-                        <a href="index.php" class="btn btn-secondary ml-2">Annuler</a>
+                        <div class="form-group">
+                            <h2>Utilisable ?</h2>
+                            <input type="radio" id="yes" name="usability" value="1">
+                            <label for="yes">Oui</label><br>
+                            <input type="radio" id="no" name="usability" value="0">
+                            <label for="no">Non</label><br>
+                        </div>
+                        <div class="form-group mt-4">
+                            <input type="submit" class="btn btn-primary" value="Enregistrer">
+                            <a href="../../index.php" class="btn btn-secondary ml-2">Annuler</a>
+                        </div>
                     </form>
+
                 </div>
             </div>        
         </div>
