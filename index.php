@@ -9,21 +9,38 @@
         <h2>Ordinateurs complets</h2>
         <a class="mx-2" href="db/crud/create.php"><i class="fa-solid fa-plus" style="color: #008000;"></i></a>
     </div>
-    <div class="computer mb-4">
+    <div class="computer mb-4 d-flex">
         <?php
             require_once('db/requetes/computer.php');
             foreach($result as $row){
         ?>
         <div class="col-lg-3 col-md-4">
             <div class="card">
+                <?php 
+                    if( $row['utilisable'] == 0 ){
+                        echo '<span class="badge badge-success mb-2">Utilisable</span>';
+                    }else{
+                        echo '<span class="badge badge-warning mb-2">À réparer</span>';
+                    }
+                ?>
                 <div class="card-body">
-                    <h5 class="card-title"><?= $row['title'] ?></h5>
+                    <h5 class="card-title"><?= $row['titre'] ?></h5>
                     <h6 class="card-subtitle mb-2 text-muted">Date d'acquisition : <?= $row['date_acquisition'] ?></h6>
                     <p class="card-text"><?= $row['date_acquisition'] ?></p>
                     <a href="#" class="card-link">Card link</a>
                     <a href="#" class="card-link">Another link</a>
                 </div>
             </div>
+
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="..." alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+
         </div>
         <?php } ?>
     </div>

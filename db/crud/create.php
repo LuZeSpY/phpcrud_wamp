@@ -2,15 +2,14 @@
 /* Inclure le fichier config */
 // require_once('../connexion.php');
 
-var_dump($_POST["usability"]);
-
 if(!empty($_POST)){
     //$_POST n'est pas vide.
-    if(isset($_POST["title"], $_POST["purchase_date"], $_POST["description"], $_POST["usability"]) 
+    if(isset($_POST["title"], $_POST["purchase_date"], $_POST["description"], $_POST["usability"], $FILES["file"]) 
     && !empty($_POST["title"]) 
     && !empty($_POST["purchase_date"]) 
     && !empty($_POST["description"])
     && !empty($_POST["usability"])
+    && !empty($FILES["file"])
     ){
         //FORM complet
         //Protection failles XSS
@@ -19,16 +18,18 @@ if(!empty($_POST)){
         $date_achat = $_POST["purchase_date"];
         $caracteristiques = htmlspecialchars($_POST["description"]);
         $usability = $_POST["usability"];
+        $countfiles = count($_FILES['files']['name']);
 
         //Connexion
         require_once('../connexion.php');
 
-        $sql = "INSERT INTO `computer` (`title`, `date_acquisition`, `caracteristiques`, `utilisable`) VALUES (:title, :date_acquisition, :caracteristiques, :utilisable)";
+        $sql = "INSERT INTO `computer` (`titre`, `date_acquisition`, `caracteristiques`, `utilisable`, `image`) VALUES (:title, :date_acquisition, :caracteristiques, :utilisable, :file)";
         $query = $db->prepare($sql);
         $query->bindValue(":title", $title, PDO::PARAM_STR);
         $query->bindValue(":date_acquisition", $date_achat, PDO::PARAM_STR);
         $query->bindValue(":caracteristiques", $caracteristiques, PDO::PARAM_STR);
         $query->bindValue(":utilisable", $usability, PDO::PARAM_STR);
+        $query->bindValue(":file", $image, PDO::PARAM_STR);
         
         if(!$query->execute()) {
             die("Une erreur est survenue");
@@ -64,10 +65,14 @@ if(!empty($_POST)){
                     <h2 class="mt-5">Rajouter un ordinateur</h2>
                     <p>Remplir le formulaire pour enregistrer un nouvel ordinateur dans la base de données</p>
 
-                    <form method="post">
+                    <form method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label>Titre</label>
                             <textarea name="title" class="form-control"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="formFile" class="form-label">Insérer l'image du PC</label>
+                            <input class="form-control-file" type="file" name="file">
                         </div>
                         <div class="form-group">
                             <label>Date d'acquisition</label>
